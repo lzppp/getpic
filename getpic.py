@@ -1,13 +1,16 @@
 #coding=utf-8
+import shutil 
 import os,sys
 import getpass
 def copyFiles(sourceDir,targetDir):
 	for files in os.listdir(sourceDir):
-		sourceFile = os.path.join(sourceDir,files)   //把目录名和文件名链接起来
+		sourceFile = os.path.join(sourceDir,files)
 		targetFile = os.path.join(targetDir,files)
+		if os.path.isfile(sourceFile): 
+                        open(targetFile, "wb").write(open(sourceFile, "rb").read())
 def rename():
 	path=os.path.dirname(os.path.realpath(__file__))
-	print path
+	print (path)
 	filelist = os.listdir(path)
 	for files in filelist:
 		Olddir=os.path.join(path,files);#原来的文件路径
@@ -16,8 +19,10 @@ def rename():
 		filename=os.path.splitext(files)[0];#文件名
 		filetype=os.path.splitext(files)[1];#文件扩展名
 		if filetype!='.py':
-			Newdir=os.path.join(path,filename+"jpg");#新的文件路径
+			Newdir=os.path.join(path,filename+".jpg");#新的文件路径
 			os.rename(Olddir,Newdir);#重命名
 username = getpass.getuser()
-copyFiles("C:\Users\\"+username+"\AppData\Local\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets",os.path.dirname(os.path.realpath(__file__)))
+originpath ="C:\\Users\\"+username+"\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets"
+print (originpath)
+copyFiles(originpath ,os.path.dirname(os.path.realpath(__file__)))
 rename()
